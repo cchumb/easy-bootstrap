@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>chumbi-textbox Example</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/easyBootstrap.css">
+</head>
+<body>
+<div class="container">
+
+	<div class="easyBootstrap-login">
+	 <form id="fm-1" class="easyBootstrap-form" novalidate="true">
+	 	<div class="easyBootstrap-form-header">
+	 	<h3>Inicio de Sesion</h3>
+	 	<hr>
+	 	</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<input id="tb-1" class="easyBootstrap-textbox">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				<input id="tb-2" class="easyBootstrap-textbox">
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="easyBootstrap-form-footer">
+					<button id="btn-1" > Ingresar </button>
+				</div>
+			</div>
+		</div>
+	 </form>
+    </div>
+</div>
+
+
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/chumbi-textbox.js"></script>
+<script>
+	$( document ).ready(function(){
+
+		$('#tb-1').textbox({
+			required: true,
+			label: '<li class="glyphicon glyphicon-user"></li> Usuario',
+			type: "text",
+			readonly: false,
+    	//	icon: "glyphicon glyphicon-warning-sign"
+		});
+		$('#tb-2').textbox({
+			required: true,
+			label: '<li class="glyphicon glyphicon-lock"></li> Password',
+			type: "password",
+			readonly: false,
+      	//	icon: ""
+		});
+		$("#btn-1").button({
+			text: "Aceptar",
+			theme: "success",
+			//tooltip: "Ayuda",
+			//icon: "glyphicon glyphicon-floppy-disk",
+			onClick:function(){
+				clickear();
+			},
+		});
+
+
+	});
+
+	function clickear(){ 
+
+		$("#btn-1").button('hidden', true);
+		// $('#fm-1').form("validate", function(result){
+		// 	if ( result === true){
+		// 		$('#tb-1').textbox('clear');
+		// 		$('#tb-2').textbox('clear');
+		// 	}
+		// });
+
+	}
+</script>
+
+
+</body>
+</html>
