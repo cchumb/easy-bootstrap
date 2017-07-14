@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Easy-textbox Example</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/easy-Bootstrap.css">
+</head>
+<body>
+<div class="container">
+
+    <div class="easyBootstrap-login">
+        <form id="fm-1" class="easyBootstrap-form" novalidate="true">
+            <div class="easyBootstrap-form-header">
+                <h3>Prueba Comnbobox</h3>
+                <hr>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select id="tb-1" class="easyBootstrap-combobox"></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select id="tb-2" class="easyBootstrap-combobox"></select>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<button id="btn-1" onclick="llamar()" > Ingresar </button>
+
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/easy-bootstrap.js"></script>
+<script src="js/easy-combobox.js"></script>
+<script>
+    $( document ).ready(function(){
+
+        $('#tb-1').combobox({
+            required: true,
+            urldir:"areas_trabajos.json",
+
+            fieldText:'area'
+            //	icon: "glyphicon glyphicon-warning-sign"
+        });
+
+        $("#tb-2").combobox({
+            required: true,
+            idField:'id',
+            fieldText:'area',
+           urldir:"areas_trabajos.json",
+            //	icon: "glyphicon glyphicon-warning-sign"
+        });
+
+
+
+    });
+    function llamar() {
+        $("#tb-2").combobox('setValue',2)
+    }
+</script>
+
+
+</body>
+</html>
