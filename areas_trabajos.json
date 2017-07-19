@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "area": "CTR",
+    "iconObj":"filesave"
+  },
+  {
+    "id": 2,
+    "area": "ANTENA",
+    "iconObj":"filesave"
+  }
+]
