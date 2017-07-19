@@ -25,12 +25,30 @@
                     <select id="tb-2" class="easyBootstrap-combobox"></select>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select id="tb-3" class="easyBootstrap-combobox" aria-label='Left Align'></select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select id="tb-4" class="easyBootstrap-combobox" aria-label='Left Align'>
+
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <select id="tb-5" class="easyBootstrap-combobox" aria-label='Left Align'>
+
+                    </select>
+                </div>
+            </div>
 
         </form>
+        <button id="btn-1" onclick="llamar()"> Ingresar</button>
     </div>
 </div>
-<button id="btn-1" onclick="llamar()" > Ingresar </button>
-
 
 
 <script src="js/jquery-3.2.1.min.js"></script>
@@ -38,30 +56,94 @@
 <script src="js/easy-bootstrap.js"></script>
 <script src="js/easy-combobox.js"></script>
 <script>
-    $( document ).ready(function(){
+    $(document).ready(function () {
 
-        $('#tb-1').combobox({
-            required: true,
-            urldir:"areas_trabajos.json",
-
-            fieldText:'area'
+//        $('#tb-1').combobox({
+//            required: true,
+//            urldir: "areas_trabajos.json",
+//
+//            fieldText: 'area'
+//            //	icon: "glyphicon glyphicon-warning-sign"
+//        });
+//
+//        $("#tb-2").combobox({
+//            required: true,
+//            idField: 'id',
+//            fieldText: 'area',
+//            urldir: "areas_trabajos.json",
+//            //	icon: "glyphicon glyphicon-warning-sign"
+//        });
+//        $("#tb-3").combobox({
+//            required: true,
+            //idField:'id',
+            // fieldText:'area',
+            //urldir:"areas_trabajos.json",
+//            data: [{
+//                label: 'java',
+//                value: 'Java'
+//            },{
+//                label: 'perl',
+//                value: 'Perl'
+//            },{
+//                label: 'ruby',
+//                value: 'Ruby'
+//            }]
             //	icon: "glyphicon glyphicon-warning-sign"
+       // });
+//        $("#tb-2").combobox({
+//            required: true,
+//            idField: 'id',
+//            fieldText: 'area',
+//            urldir: "areas_trabajos.json",
+//        });
+
+        $("#tb-4").combobox({
+            required: true,
+            idField: 'id',
+            fieldText: 'area',
+            urldir: "areas_trabajos.json",
+            beforeLoad: function (param) {
+                param.id = 3,
+                param.area = "Son todos Putos"
+            }
+        });
+        $("#tb-5").combobox({
+            required: true,
+            idField: 'id',
+            fieldText: 'area',
+            urldir: "areas_trabajos.json",
+            loadSuccesData: function (param) {
+                console.log("on");
+            }
         });
 
-        $("#tb-2").combobox({
-            required: true,
-            idField:'id',
-            fieldText:'area',
-           urldir:"areas_trabajos.json",
-            //	icon: "glyphicon glyphicon-warning-sign"
-        });
 
 
 
     });
     function llamar() {
-        $("#tb-2").combobox('setValue',2)
+
+        var valores = [
+//            {
+//                "id": 1,
+//                "area": "CTR",
+//
+//            },
+//            {
+//                "id": 2,
+//                "area": "ANTENA",
+//
+//            }
+        ];
+//        valores[0] = "Jessica";
+//        valores[1] = "Jeniffer";
+//        valores[2] = "Iolanda";
+
+       // $("#tb-3").combobox('setValues', valores);
+
+
     }
+
 </script>
 
 
