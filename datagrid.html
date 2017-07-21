@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>easy-bootstrap - Documentacion</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/easy-Bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/prism.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">easy-Bootstrap</a>
+	    </div>
+		    <ul class="nav navbar-nav">
+		      <li class="dropdown">
+		        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Controles
+		        <span class="caret"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="textbox.html">Textbox</a></li>
+		          <li><a href="#">Combobox</a></li>
+		          <li><a href="#">Button</a></li>
+		        </ul>
+		      </li>
+		      <li><a href="#">Datagrid</a></li>
+		    </ul>
+	  </div>
+	</nav>
+	<div class="container-fluid">
+	<button class="btn btn-info" type="button" onclick="mostrarUsuario();">click</button>
+		<div class="row">
+			<h1> Datagrid <small>Documentación</small> </h1>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-lg-6">
+				<table id="table1"></table>
+			</div>
+		</div>
+	</div>
+
+
+
+<!-- <button type="button" class="btn btn-primary" data-html="true" data-toggle="popover" title="<b>F</b>iltros" data-content=""><span class="glyphicon glyphicon-filter"> Filtros</span></button> -->
+
+
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/easy-bootstrap.js"></script>
+<script src="js/easy-datagrid.js"></script>
+<script src="js/prism.js"></script>
+
+<script>
+	$( document ).ready(function(){
+		$('#table1').datagrid({
+			title: 'Tabla Ejemplo',
+			striped: true,
+			bordered: false,
+			hover: true,
+			urldir: 'http://localhost/produccion/controlador/calidad/controladorNC.php?action=get_nc_list',
+			pageList: [5, 10, 50],
+			pagination: true,
+			rownumbers: true,
+			filter: true,
+			selectRow: true,
+			multiSelect: false,
+		    columns:[[
+		        {name:'id',title:'ID', filter: false, hidden: true},
+		        {name:'fecha',title:'Fecha', filter: true},
+		        {name:'numero_nc',title:'Numero NC', filter: true},
+		        {name:'disposicion',title:'disposicion', filter: true},
+		        {name:'nombre_usuario',title:'nombre_usuario', filter: true},
+		        {name:'tipo',title:'tipo', filter: true},
+		        {name:'tipo_destino',title:'tipo_destino', filter: true, hidden: true},
+		        {name:'clasificacion',title:'clasificacion', filter: true},
+		        {name:'descripcion',title:'descripcion', filter: true, hidden: true},
+		    ]],
+		});
+	});
+</script>
+<script type="text/javascript">
+function mostrarUsuario(){
+	var row = $('#table1').datagrid('getSelectedRow');
+	if ( !row ){
+		console.log("seleccione una fila");
+	}else{
+		$.each( row, function( i, rows ) {
+			console.log(rows.fecha);
+		});
+	}
+}
+</script>
+</body>
+</html>

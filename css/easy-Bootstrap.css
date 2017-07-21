@@ -1,3 +1,16 @@
+.loader {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 .easyBootstrap-login{
 	background-color: #fff;
 	max-width: 380px;
@@ -224,4 +237,64 @@
 .tooltip-right:after {
   margin-left: 0;
   margin-bottom: -16px;
+}
+
+.easy-modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1050; /* Sit on top */
+    bottom: : 0; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: hidden; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+}
+
+
+.easy-modal-content {
+    background-color: #fefefe;
+    position:fixed;
+    top: 0;
+    bottom: auto;
+    right: 0;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+    min-width: 400px;
+    height: 100%;
+    -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, .5);
+}
+
+.easy-modal-body {
+    max-height: 80%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    outline: 0;
+}
+
+.table > thead > tr > td.active2,
+.table > tbody > tr > td.active2,
+.table > tfoot > tr > td.active2,
+.table > thead > tr > th.active2,
+.table > tbody > tr > th.active2,
+.table > tfoot > tr > th.active2,
+.table > thead > tr.active2 > td,
+.table > tbody > tr.active2 > td,
+.table > tfoot > tr.active2 > td,
+.table > thead > tr.active2 > th,
+.table > tbody > tr.active2 > th,
+.table > tfoot > tr.active2 > th {
+  background-color: #fcf571;
+}
+.table-hover > tbody > tr > td.active2:hover,
+.table-hover > tbody > tr > th.active2:hover,
+.table-hover > tbody > tr.active2:hover > td,
+.table-hover > tbody > tr:hover > .active2,
+.table-hover > tbody > tr.active2:hover > th {
+  background-color: #fcf560;
 }

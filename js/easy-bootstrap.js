@@ -1,3 +1,13 @@
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+        return this;
+    }
+});
+
 // BUTTON
 (function(){
 
@@ -116,6 +126,7 @@
 						$("#fg-"+idTextbox).addClass("has-error");
 						$("#fg-"+idTextbox).append('<span id="hb-'+ idTextbox +'" class="help-block">Complete este campo.</span>');
 						result = false;
+						textbox.animateCss('wobble');
 					}
 				}
 			});
