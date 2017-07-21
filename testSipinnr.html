@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Spinner Example</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/easy-Bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-spinner.css">
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h2>Spinner</h2>
+
+        <form id="fm-1" class="easyBootstrap-form" novalidate="true">
+            <div class="col-sm-2 col-xs-2">
+                <!--<input id="spinner"></input>-->
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <input id="spinner" class="form-control text-center inputSpinner"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <input id="sp3"  class="form-control text-center inputSpinner"></input>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="easyBootstrap-form-footer">
+                        <button type="button" onclick="clickear()" id="btn-1"> Ingresar</button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+</body>
+
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/easy-bootstrap.js"></script>
+<script src="js/easy-spinner.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#spinner").spinner({
+
+            //max:12,
+            //increment:1,
+            // value:2,
+            disabled: true,
+            urlDir: "areas_trabajos.json",
+            idField: "id",
+            fieldText: "area",
+            //readOnly:true,
+            spinUp: function () {
+                console.log("hola");
+                console.log("hola");
+            },
+            spinDown: function () {
+                console.log("hola spin down");
+                console.log("hola spin down");
+            }
+        })
+
+        $("#sp3").spinner({
+            disabled: true,
+            urlDir: "areas_trabajos.json",
+            idField: "id",
+            fieldText: "area",
+        })
+
+
+    });
+
+    function clickear() {
+        $("#spinner").spinner("clear");
+        $("#spinner").spinner("enable");
+
+    }
+</script>
+
+
+</body>
+</html>

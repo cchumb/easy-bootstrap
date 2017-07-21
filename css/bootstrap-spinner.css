@@ -1,0 +1,31 @@
+
+.spinnerBtn:hover {background-color: darkseagreen}
+
+.spinnerBtn:active {
+    transform: translateY(4px);
+}
+.inputSpinner{
+    background-color:white;
+    -webkit-font-kerning: auto;
+    font-size-adjust:inherit ;
+    font-size:x-large;
+    text-align: center;
+
+}
+
+.inputSpinner:focus,
+.inputSpinner:valid{
+    border-color: darkgrey;
+    text-shadow:1px 1px 1px black;
+    text-emphasis-color: #1b6d85;
+}
+
+.minShadow{
+    box-shadow: 2px 2px 1px #888888;
+
+}
+
+
+
+
+
