@@ -16,6 +16,7 @@
                 selectRow: false,
                 multiSelect: false,
                 hidden: false,
+                export: false,
 			}, opciones);
            // console.log(opciones.columns);
 
@@ -36,6 +37,7 @@
                 selectRow: opciones.selectRow,
                 multiSelect: opciones.multiSelect,
                 hidden: opciones.hidden,
+                export: opciones.export,
 			});
 
             datagrid.addClass('table');
@@ -55,23 +57,65 @@
 
             datagrid.wrap('<div id="ct-'+ datagrid.data('data').idDatagrid +'">');
 
-            if ( datagrid.data('data').pagination === true ){
-                head = "";
+            
+                var filterRules = '';
+                if ( datagrid.data('data').filter === false ){
+                    filterRules = 'disabled';
+                }
+
                 head = '<div class="row">';
 
+                head += '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">';
+                head += '   <div class="input-group">';
+                head += '       <span class="input-group-addon">';
+                head += '           <span class="glyphicon glyphicon-eye-open"></span>';
+                head += '       </span>';
+                head += '       <div class="form-group has-feedback">';
+                head += '           <select class="form-control input-sm" id="clist-' + datagrid.data('data').idDatagrid + '"></select>';
+                head += '       </div>';
+                head += '   </div>';
+                head += '</div>';
 
-                head += '<div class="col-lg-2 col-md-2 col-sm-4"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-eye-open"></span></span><div class="form-group has-feedback"><select class="form-control input-sm"  id="clist-' + datagrid.data('data').idDatagrid + '"></select></div></div></div>';
-                head += '<div class="col-lg-2 col-md-2 col-sm-4"><div class="input-group"><span class="input-group-addon"><span class="glyphicon glyphicon-th-list"></span></span><div class="form-group has-feedback"><select class="form-control input-sm"  id="cpage-' + datagrid.data('data').idDatagrid + '"></select></div></div></div>';
-                head += '<div class="col-lg-3 col-md-3 col-sm-2"><div id="lt-' + datagrid.data('data').idDatagrid + '"></div></div>';
-                head += '<div class="col-lg-2 col-md-2 col-sm-2"><button type="button" class="btn btn-default" id="buttonViewFilter-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-filter"></span></button></div>';
+                head += '<div class="col-lg-2 col-md-2 col-sm-3 col-xs-6">';
+                head += '   <div class="input-group">';
+                head += '       <span class="input-group-addon">';
+                head += '           <span class="glyphicon glyphicon-th-list"></span>';
+                head += '       </span>';
+                head += '       <div class="form-group has-feedback">';
+                head += '           <select class="form-control input-sm"  id="cpage-' + datagrid.data('data').idDatagrid + '"></select>';
+                head += '       </div>';
+                head += '   </div>';
+                head += '</div>';
 
-                head += '</div><br>';
+                head += '<div class="col-lg-2 col-md-2 hidden-sm hidden-xs">';
+                head += '   <div class="btn-group" role="group" aria-label="...">';
+                head += '       <button type="button" class="btn btn-default input-sm" id="buttonPreviuos-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-triangle-left"></span></button>';
+                head += '       <button type="button" class="btn btn-default input-sm" id="buttonNext-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-triangle-right"></span></button>';
+                head += '   </div>';
+                head += '</div>';
+                head += '<div class="col-lg-3 col-md-3 col-sm-1 hidden-sm hidden-xs">';
+                head += '   <div id="lt-' + datagrid.data('data').idDatagrid + '">';
+                head += '   </div>';
+                head += '</div>';
+                head += '<div class="col-lg-3 col-md-3 col-sm-3 text-right">';
+                head += '   <div class="btn-group" role="group" aria-label="...">';
+                head += '       <button '+filterRules+' type="button" class="btn btn-default" id="buttonViewFilter-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-filter"></span></button>';
+                
+                if ( datagrid.data('data').export === true ){
+                    head += '       <a class="btn btn-default" href="#" id="buttonExport-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-save"></span></a>';
+                }
+
+                head += '           <button type="button" class="btn btn-default" id="buttonRefresh-'+datagrid.data('data').idDatagrid+'"><span class="glyphicon glyphicon-refresh"></span></button>';
+                head += '       </div>';
+                head += '   </div>';
+                head += '</div>';
+                head += '<br>';
 
                 $('#ct-'+ datagrid.data('data').idDatagrid).prepend(head);
 
-            }
+            
 
-
+            var popoverFilter = "";
             if (  datagrid.data('data').filter === true){
                 popoverFilter = '<div class="row"><div class="col-lg-12"><h3>'+datagrid.data('data').title+'</h3><hr><table class="table text-center"><thead ><th class="text-center"></th><th class="text-center">Oculto</th><th class="text-center">Filtrar</th></thead><tbody>';
             }
@@ -162,6 +206,8 @@
                 }else{
                     $('#buttonViewFilter-'+datagrid.data('data').idDatagrid).removeClass('btn-danger').addClass('btn-default');
                 }
+                $('#cpage-'+data.idDatagrid).empty();
+                $('#clist-'+data.idDatagrid).empty();
                 loadData(datagrid);
             });
 
@@ -187,6 +233,71 @@
                 }
                 
             });
+
+            $('#buttonRefresh-'+datagrid.data('data').idDatagrid).on('click',function(e) {
+                loadData(datagrid);
+            });
+
+            $('#buttonExport-'+datagrid.data('data').idDatagrid).on('click',function(e) {
+                var args = [$('#ct-'+ datagrid.data('data').idDatagrid +'>table'), 'export.xls'];
+                exportTableToCSV.apply(this, args);
+            });
+
+            $('#buttonPreviuos-'+ datagrid.data('data').idDatagrid).on('click',function(e) {
+                var x = parseInt($('#cpage-'+data.idDatagrid).val());
+                if ( x < 2 ){
+                    return;
+                }
+                x--;
+                $('#cpage-'+data.idDatagrid).val(x);
+                loadData(datagrid);
+            });
+
+            $('#buttonNext-'+ datagrid.data('data').idDatagrid).on('click',function(e) {
+                var x = parseInt($('#cpage-'+data.idDatagrid).val());
+                var xUltimo = parseInt( $('#cpage-'+data.idDatagrid + ' option:last-child').val() );
+                if ( x >= xUltimo ){
+                    return;
+                }
+                x++;
+                $('#cpage-'+data.idDatagrid).val(x);
+                loadData(datagrid);
+            });
+
+    function exportTableToCSV($table, filename) {
+        var xls = '<table>';
+        xls += '<thead><tr>';
+        $("#table1 thead tr th").each(function (index) {
+            if ( $(this).attr('hidden') !== 'hidden' ){
+             xls += '<th style="border: 1px solid black; background-color: #0080FF; color:white; height: 50px; text-align: center;">'+ $(this).text() + '</th>';
+            };
+        });
+        xls += '</tr></thead>';
+        xls += '<tbody>';
+        $("#table1 tbody tr").each(function (index) {
+            xls += '<tr>';
+            $(this).find('td').each(function (index) {
+                if ( $(this).attr('hidden') !== 'hidden' ){
+                    xls += '<td style="border: 1px solid black; height: 30px; width: auto;">' + $(this).text() + '</td>';
+                }
+                
+
+            });
+            xls += '</tr>';
+        });
+        xls += '</tbody>';
+        xls += '</table>';
+       // console.log(xls);
+
+            var blob = new Blob([xls], { type: 'text/excel;charset=utf8' });
+            var csvUrl = URL.createObjectURL(blob);
+                $( this )
+                    .attr({
+                        'download': filename,
+                        'href': csvUrl
+                    });
+
+    }
 
         },          
         getSelectedRow : function(opciones){
@@ -220,7 +331,6 @@
                     }
                 });
                 result += '}';
-                console.log(result);
                 result = JSON.parse(result);
             }else{
                 $.each( row, function( i, val ) {
@@ -244,10 +354,7 @@
                     } else{
                         result += '},';
                     }
-                  //  console.log(result);
                 });
-                    
-           //       console.log(result);
                 result = JSON.parse("["+result+"]");
             }
             return result;
@@ -257,20 +364,37 @@
 
     function loadData(datagrid){
         data = datagrid.data("data");
-
-        var selectedRows = $('#clist-'+data.idDatagrid).val();
+        $('#buttonNext-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#buttonPreviuos-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#buttonViewFilter-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#buttonRefresh-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#buttonExport-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#clist-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        $('#cpage-'+ datagrid.data('data').idDatagrid).attr('disabled', true);
+        var selectedRows = data.pageList[0];
         var selectedPage = 1;
-
+        if ( $('#clist-'+data.idDatagrid + ' option').length > 1){
+            selectedRows = $('#clist-'+data.idDatagrid).val();
+        }else{
+            $.each(data.pageList, function(key, value) {
+                $('#clist-'+datagrid.data('data').idDatagrid)
+                         .append($("<option></option>")
+                         .attr("value",value)
+                         .text(value))
+                
+            });
+        }
         if ( $('#cpage-'+data.idDatagrid + ' option').length > 1){
             selectedPage = parseInt($('#cpage-'+data.idDatagrid).val());
-        }
+        }else
             head = "";
             head = '<tr>';
             if ( datagrid.data('data').rownumbers === true){
                 head += '<th class="active text-center">#</th>';
             }
+
         $.each( datagrid.data("data").columns[0], function( i, val ) {
-            var classHidden = ''
+            var classHidden = '';
             if ( val.hidden === true ){
                 classHidden = 'hidden = "hidden"'
             }else{
@@ -288,23 +412,25 @@
         head += "</tr></thead>";
         $('#thead-'+data.idDatagrid).empty();
         $('#thead-'+data.idDatagrid).append(head);
-        //$("#" + data.idDatagrid + "-tbody").fadeOut(300);
         $("#" + data.idDatagrid + "-tbody").remove();
         $('#ct-'+ data.idDatagrid).append('<div align="center" id="spin-'+ data.idDatagrid + '"><div class="loader"></div>Espere</div>');
-        var datos = [];
-        $.each( datagrid.data("data").columns[0], function( i, val ) {
-            if ( val.filter === true ){
-                if ( $('#inputFilter-'+val.name+'-'+data.idDatagrid).val() !== "" ){
-                    datos.push({
-                        'name': val.name,
-                        'op': "",
-                        'value': $('#inputFilter-'+val.name+'-'+data.idDatagrid).val()
-                    });
+        var jsonText = "";
+        if ( data.filter === true  ){
+            var datos = [];
+            $.each( datagrid.data("data").columns[0], function( i, val ) {
+                if ( val.filter === true ){
+                    if ( $('#inputFilter-'+val.name+'-'+data.idDatagrid).val() !== "" ){
+                        datos.push({
+                            'name': val.name,
+                            'op': "",
+                            'value': $('#inputFilter-'+val.name+'-'+data.idDatagrid).val()
+                        });
+                    }
                 }
-            }
 
-        });
-        var jsonText = JSON.stringify(datos);
+            });
+            var jsonText = JSON.stringify(datos);
+        }
         $.ajax({
             url: data.urldir,
             datatype: "json",
@@ -352,7 +478,11 @@
                 $("#lt-"+ data.idDatagrid).append('Total: <mark>' + result['total'] + '</mark> registros.');
 
                 if ( $('#cpage-'+data.idDatagrid + ' option').length <= 0 ){
+
                     var totalPage = Math.round(result['total'] / selectedRows);
+                    if ( (totalPage * selectedRows ) < parseInt(result['total'])){
+                        totalPage++;
+                    }
                     for (var i = 1 ; i <= totalPage ; i++) {
                         $('#cpage-'+data.idDatagrid)
                              .append($("<option></option>")
@@ -382,10 +512,13 @@
                         }
                     });
                 }
-
-
-
-
+                $('#buttonNext-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#buttonPreviuos-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#buttonViewFilter-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#buttonRefresh-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#buttonExport-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#clist-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
+                $('#cpage-'+ datagrid.data('data').idDatagrid).attr('disabled', false);
         }});
     }
 

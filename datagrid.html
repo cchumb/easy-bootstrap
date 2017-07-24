@@ -59,15 +59,16 @@
 		$('#table1').datagrid({
 			title: 'Tabla Ejemplo',
 			striped: true,
-			bordered: false,
+			bordered: true,
 			hover: true,
 			urldir: 'http://localhost/produccion/controlador/calidad/controladorNC.php?action=get_nc_list',
-			pageList: [5, 10, 50],
+			pageList: [10, 30, 50],
 			pagination: true,
 			rownumbers: true,
 			filter: true,
-			selectRow: true,
+			selectRow: false,
 			multiSelect: false,
+			export: true,
 		    columns:[[
 		        {name:'id',title:'ID', filter: false, hidden: true},
 		        {name:'fecha',title:'Fecha', filter: true},
@@ -77,7 +78,7 @@
 		        {name:'tipo',title:'tipo', filter: true},
 		        {name:'tipo_destino',title:'tipo_destino', filter: true, hidden: true},
 		        {name:'clasificacion',title:'clasificacion', filter: true},
-		        {name:'descripcion',title:'descripcion', filter: true, hidden: true},
+		        {name:'descripcion',title:'descripcion', filter: true, hidden: false},
 		    ]],
 		});
 	});
@@ -88,9 +89,9 @@ function mostrarUsuario(){
 	if ( !row ){
 		console.log("seleccione una fila");
 	}else{
-		$.each( row, function( i, rows ) {
-			console.log(rows.fecha);
-		});
+	//	$.each( row, function( i, rows ) {
+			console.log(row.fecha);
+	//	});
 	}
 }
 </script>
